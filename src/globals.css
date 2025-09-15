@@ -97,3 +97,22 @@
     @apply animate-gradient-bg;
   }
 }
+
+@layer utilities {
+  .card-gradient-border {
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+  }
+  .card-gradient-border::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: -2px; /* equal to border width */
+    border-radius: inherit; /* follow the card's border-radius */
+    background: linear-gradient(45deg, #E84DF4, #8A2BE2, #6366F1);
+    background-size: 200% 200%;
+    animation: gradient-bg 8s ease infinite;
+  }
+}

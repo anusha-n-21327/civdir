@@ -55,21 +55,20 @@ const ProfilePage = () => {
   };
 
   return (
-    <Card className="max-w-3xl mx-auto">
+    <Card className="max-w-3xl mx-auto card-gradient-border">
       <CardHeader>
-        <div className="flex items-start justify-between">
+        <div className="flex items-center gap-4">
+          <Link to="/">
+            <Button variant="outline" size="icon" aria-label="Back to Dashboard">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
           <div>
             <CardTitle>{isEditing ? "Edit Profile" : "User Profile"}</CardTitle>
             <CardDescription>
               {isEditing ? "Update your profile details below." : "View and manage your profile details."}
             </CardDescription>
           </div>
-          <Link to="/">
-            <Button variant="outline">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Button>
-          </Link>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">

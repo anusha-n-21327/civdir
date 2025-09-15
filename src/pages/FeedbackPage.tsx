@@ -1,10 +1,11 @@
 import { useState, useMemo } from "react";
-import { useOutletContext } from "react-router-dom";
-import { Star } from "lucide-react";
+import { Link, useOutletContext } from "react-router-dom";
+import { ArrowLeft, Star } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { isThisMonth, isThisWeek, isThisYear, isToday, parseISO } from "date-fns";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export interface Feedback {
   id: string;
@@ -55,12 +56,21 @@ const FeedbackPage = () => {
   };
 
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card className="max-w-4xl mx-auto card-gradient-border">
       <CardHeader>
-        <CardTitle>Citizen Feedback</CardTitle>
-        <CardDescription>
-          Review feedback submitted by citizens. Sorted by highest rating first.
-        </CardDescription>
+        <div className="flex items-center gap-4">
+          <Link to="/">
+            <Button variant="outline" size="icon" aria-label="Back to Dashboard">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <CardTitle>Citizen Feedback</CardTitle>
+            <CardDescription>
+              Review feedback submitted by citizens. Sorted by highest rating first.
+            </CardDescription>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col sm:flex-row gap-4 pb-4">

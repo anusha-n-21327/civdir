@@ -11,7 +11,7 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, icon: Icon, colorClass }: StatCardProps) => {
   return (
-    <Card className="hover:scale-105 transition-transform duration-300 ease-in-out">
+    <Card className="hover:scale-105 transition-transform duration-300 ease-in-out card-gradient-border">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <Icon className={cn("h-4 w-4", colorClass)} />

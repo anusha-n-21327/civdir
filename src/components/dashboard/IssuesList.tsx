@@ -40,7 +40,7 @@ const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
   });
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col card-gradient-border">
       <CardHeader>
         <CardTitle>Issues</CardTitle>
         <div className="flex flex-col sm:flex-row gap-4 mt-4">

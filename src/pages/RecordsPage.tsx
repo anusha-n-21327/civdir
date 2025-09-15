@@ -1,11 +1,13 @@
 import { useState, useMemo } from "react";
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Issue } from "@/pages/Dashboard";
 import { isThisMonth, isThisWeek, isThisYear, parseISO } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 interface OutletContextType {
   issues: Issue[];
@@ -32,12 +34,21 @@ const RecordsPage = () => {
   }, [issues, dateFilter]);
 
   return (
-    <Card className="max-w-4xl mx-auto">
+    <Card className="max-w-4xl mx-auto card-gradient-border">
       <CardHeader>
-        <CardTitle>Completed Issue Records</CardTitle>
-        <CardDescription>
-          Browse and filter all completed issues.
-        </CardDescription>
+        <div className="flex items-center gap-4">
+          <Link to="/">
+            <Button variant="outline" size="icon" aria-label="Back to Dashboard">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <div>
+            <CardTitle>Completed Issue Records</CardTitle>
+            <CardDescription>
+              Browse and filter all completed issues.
+            </CardDescription>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="py-4">
