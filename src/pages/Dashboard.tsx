@@ -37,7 +37,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-        <StatCard title="New Reports" value={stats.newReports.toString()} icon={FilePlus} colorClass="text-[#E84DF4]" />
+        <StatCard title="New Reports" value={stats.newReports.toString()} icon={FilePlus} colorClass="text-red-500" />
         <StatCard title="Total Issues" value={stats.totalIssues.toString()} icon={AlertCircle} colorClass="text-[#8A2BE2]" />
         <StatCard title="In Progress" value={stats.inProgress.toString()} icon={Clock} colorClass="text-[#6366F1]" />
         <StatCard title="Completed" value={stats.completed.toString()} icon={CheckCircle} colorClass="text-[#34D399]" />

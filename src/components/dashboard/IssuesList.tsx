@@ -12,11 +12,18 @@ interface IssuesListProps {
   onIssueClick: (issue: Issue) => void;
 }
 
-const statusStyles = {
-  'New': 'bg-[#E84DF4] text-black animate-pulse-glow',
+const statusBadgeStyles = {
+  'New': 'bg-red-500 text-white animate-pulse-glow',
   'In Progress': 'bg-[#6366F1] text-white',
   'Completed': 'bg-[#34D399] text-black',
   'Rejected': 'bg-[#64748B] text-white',
+};
+
+const statusBorderStyles = {
+  'New': 'border-red-500',
+  'In Progress': 'border-[#6366F1]',
+  'Completed': 'border-[#34D399]',
+  'Rejected': 'border-[#64748B]',
 };
 
 const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
@@ -71,7 +78,10 @@ const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
             filteredIssues.map(issue => (
               <div 
                 key={issue.id} 
-                className="p-4 border rounded-lg shadow-sm hover:shadow-lg hover:translate-y-[-2px] transition-all duration-200 cursor-pointer"
+                className={cn(
+                  "p-4 border border-l-4 rounded-lg shadow-sm hover:shadow-lg hover:translate-y-[-2px] transition-all duration-200 cursor-pointer",
+                  statusBorderStyles[issue.status]
+                )}
                 onClick={() => onIssueClick(issue)}
               >
                 <div className="flex justify-between items-start">
@@ -79,7 +89,7 @@ const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
                     <h3 className="font-semibold">{issue.title}</h3>
                     <p className="text-sm text-muted-foreground">{issue.category}</p>
                   </div>
-                  <Badge className={cn(statusStyles[issue.status])}>{issue.status}</Badge>
+                  <Badge className={cn(statusBadgeStyles[issue.status])}>{issue.status}</Badge>
                 </div>
                 <div className="text-xs text-muted-foreground mt-2">
                   <span>Submitted by {issue.submittedBy} on {issue.date}</span>
