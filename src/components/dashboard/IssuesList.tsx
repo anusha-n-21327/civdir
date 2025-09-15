@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Issue } from "@/pages/Dashboard";
 import RejectIssueDialog from "./RejectIssueDialog";
-import IssueDetailsSheet from "./IssueDetailsSheet";
+import IssueDetailsDialog from "./IssueDetailsDialog";
 import { showSuccess } from "@/utils/toast";
 
 interface IssuesListProps {
@@ -25,7 +25,7 @@ const IssuesList = ({ issues, setIssues }: IssuesListProps) => {
   const [categoryFilter, setCategoryFilter] = useState("All");
   
   const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false);
   const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
   const [issueToUpdate, setIssueToUpdate] = useState<Issue | null>(null);
 
@@ -40,13 +40,13 @@ const IssuesList = ({ issues, setIssues }: IssuesListProps) => {
 
   const handleIssueClick = (issue: Issue) => {
     setSelectedIssue(issue);
-    setIsSheetOpen(true);
+    setIsDetailsDialogOpen(true);
   };
 
   const handleUpdateIssue = (updatedIssue: Issue, isRejecting: boolean) => {
     if (isRejecting) {
       setIssueToUpdate(updatedIssue);
-      setIsSheetOpen(false);
+      setIsDetailsDialogOpen(false);
       setIsRejectDialogOpen(true);
     } else {
       setIssues(prev => prev.map(i => i.id === updatedIssue.id ? updatedIssue : i));
@@ -125,9 +125,9 @@ const IssuesList = ({ issues, setIssues }: IssuesListProps) => {
         </CardContent>
       </Card>
       
-      <IssueDetailsSheet
-        isOpen={isSheetOpen}
-        onClose={() => setIsSheetOpen(false)}
+      <IssueDetailsDialog
+        isOpen={isDetailsDialogOpen}
+        onClose={() => setIsDetailsDialogOpen(false)}
         issue={selectedIssue}
         onUpdate={handleUpdateIssue}
       />

@@ -1,12 +1,12 @@
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetFooter,
-  SheetClose,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -15,7 +15,7 @@ import { Issue } from "@/pages/Dashboard";
 import { useEffect, useState } from "react";
 import { showSuccess } from "@/utils/toast";
 
-interface IssueDetailsSheetProps {
+interface IssueDetailsDialogProps {
   issue: Issue | null;
   isOpen: boolean;
   onClose: () => void;
@@ -25,7 +25,7 @@ interface IssueDetailsSheetProps {
 const departments = ["Public Works", "Sanitation", "Roads", "Water", "Parks", "Vandalism", "Unassigned"];
 const statuses: Issue['status'][] = ["New", "In Progress", "Completed", "Rejected"];
 
-const IssueDetailsSheet = ({ issue, isOpen, onClose, onUpdate }: IssueDetailsSheetProps) => {
+const IssueDetailsDialog = ({ issue, isOpen, onClose, onUpdate }: IssueDetailsDialogProps) => {
   const [assignedTo, setAssignedTo] = useState("");
   const [status, setStatus] = useState<Issue['status']>('New');
   const [notes, setNotes] = useState("");
@@ -56,14 +56,14 @@ const IssueDetailsSheet = ({ issue, isOpen, onClose, onUpdate }: IssueDetailsShe
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
-        <SheetHeader>
-          <SheetTitle>{issue.title}</SheetTitle>
-          <SheetDescription>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{issue.title}</DialogTitle>
+          <DialogDescription>
             Submitted by {issue.submittedBy} on {issue.date}
-          </SheetDescription>
-        </SheetHeader>
+          </DialogDescription>
+        </DialogHeader>
         <div className="py-6 space-y-6">
           <div>
             <img src={issue.imageUrl} alt={issue.title} className="rounded-lg w-full object-cover" />
@@ -113,15 +113,15 @@ const IssueDetailsSheet = ({ issue, isOpen, onClose, onUpdate }: IssueDetailsShe
             />
           </div>
         </div>
-        <SheetFooter>
-          <SheetClose asChild>
+        <DialogFooter>
+          <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
-          </SheetClose>
+          </DialogClose>
           <Button onClick={handleSaveChanges}>Save Changes</Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default IssueDetailsSheet;
+export default IssueDetailsDialog;
