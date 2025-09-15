@@ -36,7 +36,7 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
         <StatCard title="New Reports" value={stats.newReports.toString()} icon={FilePlus} />
         <StatCard title="Total Issues" value={stats.totalIssues.toString()} icon={AlertCircle} />
         <StatCard title="In Progress" value={stats.inProgress.toString()} icon={Clock} />
