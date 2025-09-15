@@ -39,11 +39,21 @@ const Layout = ({ issues, setIssues, userProfile, onUpdateProfile, feedbackData 
     }
   };
 
+  const handleStartReject = (issueToReject: Issue) => {
+    setIssueToUpdate(issueToReject);
+    setIsDetailsOpen(false);
+    setIsRejectOpen(true);
+  };
+
   const handleRejectSubmit = (reason: string) => {
     if (!issueToUpdate) return;
-    const finalIssue = { ...issueToUpdate, notes: `${issueToUpdate.notes}\n\nRejection Reason: ${reason}`.trim() };
+    const finalIssue = { 
+      ...issueToUpdate, 
+      status: 'Rejected' as const,
+      notes: `Rejection Reason: ${reason}` 
+    };
     setIssues(prev => prev.map(i => i.id === finalIssue.id ? finalIssue : i));
-    showSuccess("Issue has been rejected.");
+    showSuccess("Issue rejected. A notification has been sent to the citizen.");
     setIsRejectOpen(false);
     setIssueToUpdate(null);
     setSelectedIssue(null);
@@ -60,6 +70,7 @@ const Layout = ({ issues, setIssues, userProfile, onUpdateProfile, feedbackData 
         onClose={() => setIsDetailsOpen(false)}
         issue={selectedIssue}
         onUpdate={handleUpdateIssue}
+        onStartReject={handleStartReject}
       />
       <RejectIssueDialog
         isOpen={isRejectOpen}

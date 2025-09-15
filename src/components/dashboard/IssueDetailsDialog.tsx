@@ -20,12 +20,13 @@ interface IssueDetailsDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onUpdate: (updatedIssue: Issue, isRejecting: boolean) => void;
+  onStartReject: (issue: Issue) => void;
 }
 
 const departments = ["Public Works", "Sanitation", "Roads", "Water", "Parks", "Vandalism", "Unassigned"];
 const statuses: Issue['status'][] = ["New", "In Progress", "Completed", "Rejected"];
 
-const IssueDetailsDialog = ({ issue, isOpen, onClose, onUpdate }: IssueDetailsDialogProps) => {
+const IssueDetailsDialog = ({ issue, isOpen, onClose, onUpdate, onStartReject }: IssueDetailsDialogProps) => {
   const [assignedTo, setAssignedTo] = useState("");
   const [status, setStatus] = useState<Issue['status']>('New');
   const [notes, setNotes] = useState("");
@@ -53,6 +54,21 @@ const IssueDetailsDialog = ({ issue, isOpen, onClose, onUpdate }: IssueDetailsDi
       showSuccess("Issue updated successfully.");
       onClose();
     }
+  };
+
+  const handleImplement = () => {
+    const updatedIssue: Issue = {
+      ...issue,
+      status: 'In Progress',
+      assignedTo: assignedTo === "Unassigned" ? "Public Works" : assignedTo,
+    };
+    onUpdate(updatedIssue, false);
+    showSuccess("Issue is now In Progress.");
+    onClose();
+  };
+
+  const handleReject = () => {
+    onStartReject(issue);
   };
 
   return (
@@ -114,10 +130,19 @@ const IssueDetailsDialog = ({ issue, isOpen, onClose, onUpdate }: IssueDetailsDi
           </div>
         </div>
         <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
-          <Button onClick={handleSaveChanges}>Save Changes</Button>
+          {issue.status === 'New' ? (
+            <>
+              <Button variant="destructive" onClick={handleReject}>Reject</Button>
+              <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={handleImplement}>Implement</Button>
+            </>
+          ) : (
+            <>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button onClick={handleSaveChanges}>Save Changes</Button>
+            </>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
