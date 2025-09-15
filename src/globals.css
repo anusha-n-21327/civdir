@@ -52,33 +52,33 @@
   }
 
   .dark {
-    --background: 222 83% 8%;
-    --foreground: 210 40% 98%;
-    --card: 222 83% 12%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 83% 8%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 195 91% 59%;
-    --primary-foreground: 222 83% 8%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --background: 257 30% 11%;
+    --foreground: 257 10% 80%;
+    --card: 257 30% 16%;
+    --card-foreground: 257 10% 95%;
+    --popover: 257 30% 11%;
+    --popover-foreground: 257 10% 95%;
+    --primary: 315 85% 65%;
+    --primary-foreground: 315 20% 10%;
+    --secondary: 257 30% 25%;
+    --secondary-foreground: 257 10% 95%;
+    --muted: 257 30% 25%;
+    --muted-foreground: 257 10% 65%;
+    --accent: 257 30% 25%;
+    --accent-foreground: 257 10% 95%;
     --destructive: 0 72% 51%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 195 91% 59%;
-    --sidebar-background: 222 83% 8%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 195 91% 59%;
-    --sidebar-primary-foreground: 222 83% 8%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 195 91% 59%;
+    --destructive-foreground: 0 10% 98%;
+    --border: 257 30% 25%;
+    --input: 257 30% 25%;
+    --ring: 315 85% 65%;
+    --sidebar-background: 257 30% 11%;
+    --sidebar-foreground: 257 10% 95%;
+    --sidebar-primary: 315 85% 65%;
+    --sidebar-primary-foreground: 315 20% 10%;
+    --sidebar-accent: 257 30% 25%;
+    --sidebar-accent-foreground: 257 10% 95%;
+    --sidebar-border: 257 30% 25%;
+    --sidebar-ring: 315 85% 65%;
   }
 }
 
@@ -92,7 +92,7 @@
   }
 
   .dark body {
-    background: linear-gradient(-45deg, #0D1117, #171A21, #0D1117, #1F232E);
+    background: linear-gradient(-45deg, #161221, #2B2141, #161221, #422F5E);
     background-size: 400% 400%;
     @apply animate-gradient-bg;
   }

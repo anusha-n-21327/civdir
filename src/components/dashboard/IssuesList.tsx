@@ -14,9 +14,9 @@ interface IssuesListProps {
 
 const statusStyles = {
   'New': 'bg-[#E84DF4] text-black animate-pulse-glow',
-  'In Progress': 'bg-[#3A86FF] text-white',
-  'Completed': 'bg-[#2EFF7B] text-black',
-  'Rejected': 'bg-[#8D99AE] text-white',
+  'In Progress': 'bg-[#6366F1] text-white',
+  'Completed': 'bg-[#34D399] text-black',
+  'Rejected': 'bg-[#64748B] text-white',
 };
 
 const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
