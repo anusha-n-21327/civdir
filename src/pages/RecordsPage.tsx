@@ -62,7 +62,7 @@ const RecordsPage = () => {
                     <h3 className="font-semibold">{issue.title}</h3>
                     <p className="text-sm text-muted-foreground">{issue.category}</p>
                   </div>
-                  <Badge className={cn("bg-[#2FBF71] text-black")}>Completed</Badge>
+                  <Badge className={cn("bg-[#2EC4B6] text-black")}>Completed</Badge>
                 </div>
                 <div className="text-xs text-muted-foreground mt-2">
                   <span>Completed on {issue.date}</span>

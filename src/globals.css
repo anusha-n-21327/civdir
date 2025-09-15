@@ -52,33 +52,33 @@
   }
 
   .dark {
-    --background: 188 87% 6%;
-    --foreground: 210 40% 98%;
-    --card: 188 87% 9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 188 87% 6%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 178 100% 33%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 188 50% 20%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 188 50% 20%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 188 50% 25%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 188 50% 20%;
-    --input: 188 50% 20%;
-    --ring: 178 100% 33%;
-    --sidebar-background: 188 87% 6%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 178 100% 33%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 188 50% 25%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 188 50% 20%;
-    --sidebar-ring: 178 100% 33%;
+    --background: 240 10% 98%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 0 100% 71%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 0 100% 71%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 10% 3.9%;
+    --sidebar-primary: 0 100% 71%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: 0 100% 71%;
   }
 }
 
@@ -89,7 +89,7 @@
 
   body {
     @apply bg-background text-foreground;
-    background-image: linear-gradient(to bottom, hsl(188 87% 6%), hsl(188 87% 9%));
+    background-image: linear-gradient(to bottom, #FFF8F0, #F0F0FF);
     background-attachment: fixed;
   }
 }

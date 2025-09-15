@@ -13,10 +13,10 @@ interface IssuesListProps {
 }
 
 const statusStyles = {
-  'New': 'bg-[#F0C808] text-black',
-  'In Progress': 'bg-[#00A9A5] text-white',
-  'Completed': 'bg-[#2FBF71] text-black',
-  'Rejected': 'bg-slate-600 text-white',
+  'New': 'bg-[#FFD166] text-black',
+  'In Progress': 'bg-[#4FC3F7] text-black',
+  'Completed': 'bg-[#2EC4B6] text-black',
+  'Rejected': 'bg-[#8D99AE] text-white',
 };
 
 const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
