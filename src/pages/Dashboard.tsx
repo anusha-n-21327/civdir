@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/dashboard/Header";
 import StatCard from "@/components/dashboard/StatCard";
 import IssuesList from "@/components/dashboard/IssuesList";
@@ -10,7 +10,7 @@ import { showSuccess } from "@/utils/toast";
 import SettingsDialog from "@/components/dashboard/SettingsDialog";
 import FeedbackDialog from "@/components/dashboard/FeedbackDialog";
 import RecordsDialog from "@/components/dashboard/RecordsDialog";
-import ProfileDialog from "@/components/dashboard/ProfileDialog";
+import ProfileDialog, { UserProfile } from "@/components/dashboard/ProfileDialog";
 
 export interface Issue {
   id: string;
@@ -42,6 +42,17 @@ const initialFeedback: Feedback[] = [
     { id: 'f5', name: 'Ethan', date: '2023-11-01', area: 'North Suburbs', rating: 3, comment: 'Trash pickup is often delayed on my street.' },
 ];
 
+const defaultProfile: UserProfile = {
+  name: "Admin User",
+  email: "admin@gov.in",
+  avatarUrl: "https://github.com/shadcn.png",
+  age: 35,
+  department: "System Administration",
+  gender: "Male",
+  state: "Delhi",
+  country: "India",
+};
+
 const Dashboard = () => {
   const [issues, setIssues] = useState<Issue[]>(initialIssues);
   const [feedback] = useState<Feedback[]>(initialFeedback);
@@ -55,6 +66,17 @@ const Dashboard = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [isRecordsOpen, setIsRecordsOpen] = useState(false);
+
+  const [userProfile, setUserProfile] = useState<UserProfile>(() => {
+    const savedProfile = localStorage.getItem("userProfile");
+    return savedProfile ? JSON.parse(savedProfile) : defaultProfile;
+  });
+
+  const handleUpdateProfile = (updatedProfile: UserProfile) => {
+    setUserProfile(updatedProfile);
+    localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
+    showSuccess("Profile updated successfully!");
+  };
 
   const newIssues = issues.filter(i => i.status === 'New');
 
@@ -125,7 +147,12 @@ const Dashboard = () => {
         onClose={() => setIsRejectOpen(false)}
         onSubmit={handleRejectSubmit}
       />
-      <ProfileDialog isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+      <ProfileDialog 
+        isOpen={isProfileOpen} 
+        onClose={() => setIsProfileOpen(false)} 
+        userProfile={userProfile}
+        onUpdateProfile={handleUpdateProfile}
+      />
       <SettingsDialog isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
       <FeedbackDialog isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} feedbackData={feedback} />
       <RecordsDialog isOpen={isRecordsOpen} onClose={() => setIsRecordsOpen(false)} issues={issues} />
