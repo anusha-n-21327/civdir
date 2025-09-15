@@ -1,24 +1,18 @@
 import { useState, useMemo } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { useOutletContext } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Issue } from "@/pages/Dashboard";
 import { isThisMonth, isThisWeek, isThisYear, parseISO } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-interface RecordsDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface OutletContextType {
   issues: Issue[];
 }
 
-const RecordsDialog = ({ isOpen, onClose, issues }: RecordsDialogProps) => {
+const RecordsPage = () => {
+  const { issues } = useOutletContext<OutletContextType>();
   const [dateFilter, setDateFilter] = useState("all");
 
   const completedIssues = useMemo(() => {
@@ -38,14 +32,14 @@ const RecordsDialog = ({ isOpen, onClose, issues }: RecordsDialogProps) => {
   }, [issues, dateFilter]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] flex flex-col">
-        <DialogHeader>
-          <DialogTitle>Completed Issue Records</DialogTitle>
-          <DialogDescription>
-            Browse and filter all completed issues.
-          </DialogDescription>
-        </DialogHeader>
+    <Card className="max-w-4xl mx-auto">
+      <CardHeader>
+        <CardTitle>Completed Issue Records</CardTitle>
+        <CardDescription>
+          Browse and filter all completed issues.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
         <div className="py-4">
           <Select value={dateFilter} onValueChange={setDateFilter}>
             <SelectTrigger className="w-full sm:w-[180px]">
@@ -59,31 +53,29 @@ const RecordsDialog = ({ isOpen, onClose, issues }: RecordsDialogProps) => {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex-grow overflow-y-auto pr-2">
-          <div className="space-y-4">
-            {completedIssues.length > 0 ? (
-              completedIssues.map(issue => (
-                <div key={issue.id} className="p-4 border rounded-lg">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-semibold">{issue.title}</h3>
-                      <p className="text-sm text-muted-foreground">{issue.category}</p>
-                    </div>
-                    <Badge className={cn("text-white bg-green-500")}>Completed</Badge>
+        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+          {completedIssues.length > 0 ? (
+            completedIssues.map(issue => (
+              <div key={issue.id} className="p-4 border rounded-lg">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-semibold">{issue.title}</h3>
+                    <p className="text-sm text-muted-foreground">{issue.category}</p>
                   </div>
-                  <div className="text-xs text-muted-foreground mt-2">
-                    <span>Completed on {issue.date}</span>
-                  </div>
+                  <Badge className={cn("text-white bg-green-500")}>Completed</Badge>
                 </div>
-              ))
-            ) : (
-              <p className="text-center text-muted-foreground py-8">No completed issues match the current filters.</p>
-            )}
-          </div>
+                <div className="text-xs text-muted-foreground mt-2">
+                  <span>Completed on {issue.date}</span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-muted-foreground py-8">No completed issues match the current filters.</p>
+          )}
         </div>
-      </DialogContent>
-    </Dialog>
+      </CardContent>
+    </Card>
   );
 };
 
-export default RecordsDialog;
+export default RecordsPage;

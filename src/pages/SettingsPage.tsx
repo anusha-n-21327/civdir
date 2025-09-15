@@ -1,22 +1,11 @@
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { showSuccess } from "@/utils/toast";
-
-interface SettingsDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 const languages = [
   "English", "Assamese", "Bengali", "Bodo", "Dogri", "Gujarati", "Hindi", "Kannada",
@@ -25,30 +14,29 @@ const languages = [
   "Telugu", "Urdu"
 ].sort();
 
-const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
+const SettingsPage = () => {
   const handlePasswordSave = () => {
-    // In a real app, you'd handle password change logic here.
     showSuccess("Password updated successfully!");
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[480px]">
-        <DialogHeader>
-          <DialogTitle>Settings</DialogTitle>
-          <DialogDescription>
-            Manage your application settings and preferences.
-          </DialogDescription>
-        </DialogHeader>
+    <Card className="max-w-3xl mx-auto">
+      <CardHeader>
+        <CardTitle>Settings</CardTitle>
+        <CardDescription>
+          Manage your application settings and preferences.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
         <Tabs defaultValue="language" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
             <TabsTrigger value="language">Language</TabsTrigger>
             <TabsTrigger value="notifications">Notifications</TabsTrigger>
             <TabsTrigger value="password">Password</TabsTrigger>
             <TabsTrigger value="help">Help</TabsTrigger>
           </TabsList>
-          <TabsContent value="language" className="py-4">
-            <div className="space-y-2">
+          <TabsContent value="language" className="py-6">
+            <div className="space-y-2 max-w-sm">
               <Label htmlFor="language">Application Language</Label>
               <Select>
                 <SelectTrigger id="language">
@@ -62,20 +50,20 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
               </Select>
             </div>
           </TabsContent>
-          <TabsContent value="notifications" className="py-4">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
+          <TabsContent value="notifications" className="py-6">
+            <div className="space-y-4 max-w-sm">
+              <div className="flex items-center justify-between rounded-lg border p-4">
                 <Label htmlFor="allow-notifications">Allow notifications</Label>
                 <Switch id="allow-notifications" defaultChecked />
               </div>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="show-on-lockscreen">Show notifications on lock screen</Label>
+              <div className="flex items-center justify-between rounded-lg border p-4">
+                <Label htmlFor="show-on-lockscreen">Show on lock screen</Label>
                 <Switch id="show-on-lockscreen" />
               </div>
             </div>
           </TabsContent>
-          <TabsContent value="password" className="py-4">
-            <div className="space-y-4">
+          <TabsContent value="password" className="py-6">
+            <div className="space-y-4 max-w-sm">
               <div className="space-y-2">
                 <Label htmlFor="current-password">Current Password</Label>
                 <Input id="current-password" type="password" />
@@ -91,7 +79,7 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
               <Button onClick={handlePasswordSave} className="w-full mt-4">Save Changes</Button>
             </div>
           </TabsContent>
-          <TabsContent value="help" className="py-4">
+          <TabsContent value="help" className="py-6">
             <div className="prose prose-sm dark:prose-invert max-w-none">
               <h4 className="font-semibold">How to Use This Application</h4>
               <ol className="list-decimal list-inside space-y-2 mt-2 text-sm text-muted-foreground">
@@ -104,9 +92,9 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
             </div>
           </TabsContent>
         </Tabs>
-      </DialogContent>
-    </Dialog>
+      </CardContent>
+    </Card>
   );
 };
 
-export default SettingsDialog;
+export default SettingsPage;

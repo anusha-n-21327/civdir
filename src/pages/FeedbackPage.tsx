@@ -1,12 +1,7 @@
 import { useState, useMemo } from "react";
+import { useOutletContext } from "react-router-dom";
 import { Star } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { isThisMonth, isThisWeek, isThisYear, isToday, parseISO } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -14,19 +9,18 @@ import { cn } from "@/lib/utils";
 export interface Feedback {
   id: string;
   name: string;
-  date: string; // ISO 8601 format: "YYYY-MM-DD"
+  date: string;
   area: string;
-  rating: number; // 1-5
+  rating: number;
   comment: string;
 }
 
-interface FeedbackDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface OutletContextType {
   feedbackData: Feedback[];
 }
 
-const FeedbackDialog = ({ isOpen, onClose, feedbackData }: FeedbackDialogProps) => {
+const FeedbackPage = () => {
+  const { feedbackData } = useOutletContext<OutletContextType>();
   const [dateFilter, setDateFilter] = useState("all");
 
   const filteredAndSortedFeedback = useMemo(() => {
@@ -61,17 +55,17 @@ const FeedbackDialog = ({ isOpen, onClose, feedbackData }: FeedbackDialogProps) 
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] flex flex-col">
-        <DialogHeader>
-          <DialogTitle>Citizen Feedback</DialogTitle>
-          <DialogDescription>
-            Review feedback submitted by citizens. Sorted by highest rating first.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex flex-col sm:flex-row gap-4 py-4">
+    <Card className="max-w-4xl mx-auto">
+      <CardHeader>
+        <CardTitle>Citizen Feedback</CardTitle>
+        <CardDescription>
+          Review feedback submitted by citizens. Sorted by highest rating first.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex flex-col sm:flex-row gap-4 pb-4">
           <Select value={dateFilter} onValueChange={setDateFilter}>
-            <SelectTrigger>
+            <SelectTrigger className="w-full sm:w-[180px]">
               <SelectValue placeholder="Filter by date" />
             </SelectTrigger>
             <SelectContent>
@@ -83,29 +77,27 @@ const FeedbackDialog = ({ isOpen, onClose, feedbackData }: FeedbackDialogProps) 
             </SelectContent>
           </Select>
         </div>
-        <div className="flex-grow overflow-y-auto pr-2">
-          <div className="space-y-4">
-            {filteredAndSortedFeedback.length > 0 ? (
-              filteredAndSortedFeedback.map(feedback => (
-                <div key={feedback.id} className="p-4 border rounded-lg">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <div className="font-semibold">{feedback.name}</div>
-                      <div className="text-xs text-muted-foreground">{new Date(feedback.date).toLocaleDateString()}</div>
-                    </div>
-                    {renderStars(feedback.rating)}
+        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+          {filteredAndSortedFeedback.length > 0 ? (
+            filteredAndSortedFeedback.map(feedback => (
+              <div key={feedback.id} className="p-4 border rounded-lg">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <div className="font-semibold">{feedback.name}</div>
+                    <div className="text-xs text-muted-foreground">{new Date(feedback.date).toLocaleDateString()}</div>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">{feedback.comment}</p>
+                  {renderStars(feedback.rating)}
                 </div>
-              ))
-            ) : (
-              <p className="text-center text-muted-foreground py-8">No feedback matches the current filters.</p>
-            )}
-          </div>
+                <p className="text-sm text-muted-foreground mt-2">{feedback.comment}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-muted-foreground py-8">No feedback matches the current filters.</p>
+          )}
         </div>
-      </DialogContent>
-    </Dialog>
+      </CardContent>
+    </Card>
   );
 };
 
-export default FeedbackDialog;
+export default FeedbackPage;

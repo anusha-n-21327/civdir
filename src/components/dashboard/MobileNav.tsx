@@ -1,16 +1,10 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { showSuccess } from "@/utils/toast";
 import { FileText, HelpCircle, LogOut, Menu, MessageSquare, Settings, User } from "lucide-react";
 
-interface MobileNavProps {
-  onShowProfile: () => void;
-  onShowSettings: () => void;
-  onShowFeedback: () => void;
-  onShowRecords: () => void;
-}
-
-const MobileNav = ({ onShowProfile, onShowSettings, onShowFeedback, onShowRecords }: MobileNavProps) => {
+const MobileNav = () => {
   const handleLogout = () => {
     showSuccess("You have been logged out.");
   };
@@ -29,10 +23,10 @@ const MobileNav = ({ onShowProfile, onShowSettings, onShowFeedback, onShowRecord
         </div>
         <nav className="flex-grow flex flex-col">
           <ul className="space-y-2 px-4">
-            <li><Button variant="ghost" className="w-full justify-start" onClick={onShowProfile}><User className="mr-2 h-4 w-4" />Profile</Button></li>
-            <li><Button variant="ghost" className="w-full justify-start" onClick={onShowSettings}><Settings className="mr-2 h-4 w-4" />Settings</Button></li>
-            <li><Button variant="ghost" className="w-full justify-start" onClick={onShowFeedback}><MessageSquare className="mr-2 h-4 w-4" />Feedback</Button></li>
-            <li><Button variant="ghost" className="w-full justify-start" onClick={onShowRecords}><FileText className="mr-2 h-4 w-4" />Records</Button></li>
+            <li><SheetClose asChild><Link to="/profile"><Button variant="ghost" className="w-full justify-start"><User className="mr-2 h-4 w-4" />Profile</Button></Link></SheetClose></li>
+            <li><SheetClose asChild><Link to="/settings"><Button variant="ghost" className="w-full justify-start"><Settings className="mr-2 h-4 w-4" />Settings</Button></Link></SheetClose></li>
+            <li><SheetClose asChild><Link to="/feedback"><Button variant="ghost" className="w-full justify-start"><MessageSquare className="mr-2 h-4 w-4" />Feedback</Button></Link></SheetClose></li>
+            <li><SheetClose asChild><Link to="/records"><Button variant="ghost" className="w-full justify-start"><FileText className="mr-2 h-4 w-4" />Records</Button></Link></SheetClose></li>
             <li><Button variant="ghost" className="w-full justify-start" disabled><HelpCircle className="mr-2 h-4 w-4" />Help</Button></li>
           </ul>
           <div className="mt-auto p-4">
