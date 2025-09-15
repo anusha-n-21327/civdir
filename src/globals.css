@@ -91,6 +91,13 @@
     @apply bg-background text-foreground;
   }
 
+  /* Hide default cursor on desktop */
+  @media (min-width: 768px) {
+    body, a, button, .cursor-pointer {
+      cursor: none;
+    }
+  }
+
   .dark body {
     background: linear-gradient(-45deg, #161221, #2B2141, #161221, #422F5E);
     background-size: 400% 400%;
