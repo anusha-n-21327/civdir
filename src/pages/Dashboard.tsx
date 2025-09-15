@@ -3,11 +3,14 @@ import Header from "@/components/dashboard/Header";
 import StatCard from "@/components/dashboard/StatCard";
 import IssuesList from "@/components/dashboard/IssuesList";
 import { AlertCircle, CheckCircle, Clock, FilePlus, XCircle } from "lucide-react";
-import LogoutButton from "@/components/dashboard/LogoutButton";
 import { Feedback } from "@/components/dashboard/FeedbackDialog";
 import IssueDetailsDialog from "@/components/dashboard/IssueDetailsDialog";
 import RejectIssueDialog from "@/components/dashboard/RejectIssueDialog";
 import { showSuccess } from "@/utils/toast";
+import SettingsDialog from "@/components/dashboard/SettingsDialog";
+import FeedbackDialog from "@/components/dashboard/FeedbackDialog";
+import RecordsDialog from "@/components/dashboard/RecordsDialog";
+import ProfileDialog from "@/components/dashboard/ProfileDialog";
 
 export interface Issue {
   id: string;
@@ -48,6 +51,11 @@ const Dashboard = () => {
   const [isRejectOpen, setIsRejectOpen] = useState(false);
   const [issueToUpdate, setIssueToUpdate] = useState<Issue | null>(null);
 
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isRecordsOpen, setIsRecordsOpen] = useState(false);
+
   const newIssues = issues.filter(i => i.status === 'New');
 
   const stats = {
@@ -86,12 +94,14 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <Header 
-        issues={issues}
         newIssues={newIssues} 
-        feedbackData={feedback}
         onIssueClick={handleIssueClick}
+        onShowProfile={() => setIsProfileOpen(true)}
+        onShowSettings={() => setIsSettingsOpen(true)}
+        onShowFeedback={() => setIsFeedbackOpen(true)}
+        onShowRecords={() => setIsRecordsOpen(true)}
       />
-      <main className="p-4 md:p-8 space-y-6 pb-20">
+      <main className="p-4 md:p-8 space-y-6">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           <StatCard title="New Reports" value={stats.newReports.toString()} icon={FilePlus} />
           <StatCard title="Total Issues" value={stats.totalIssues.toString()} icon={AlertCircle} />
@@ -103,7 +113,6 @@ const Dashboard = () => {
           <IssuesList issues={issues} setIssues={setIssues} onIssueClick={handleIssueClick} />
         </div>
       </main>
-      <LogoutButton />
 
       <IssueDetailsDialog
         isOpen={isDetailsOpen}
@@ -111,12 +120,15 @@ const Dashboard = () => {
         issue={selectedIssue}
         onUpdate={handleUpdateIssue}
       />
-
       <RejectIssueDialog
         isOpen={isRejectOpen}
         onClose={() => setIsRejectOpen(false)}
         onSubmit={handleRejectSubmit}
       />
+      <ProfileDialog isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+      <SettingsDialog isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+      <FeedbackDialog isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} feedbackData={feedback} />
+      <RecordsDialog isOpen={isRecordsOpen} onClose={() => setIsRecordsOpen(false)} issues={issues} />
     </div>
   );
 };
