@@ -18,8 +18,8 @@ interface SettingsDialogProps {
   onClose: () => void;
 }
 
-const indianLanguages = [
-  "Assamese", "Bengali", "Bodo", "Dogri", "Gujarati", "Hindi", "Kannada",
+const languages = [
+  "English", "Assamese", "Bengali", "Bodo", "Dogri", "Gujarati", "Hindi", "Kannada",
   "Kashmiri", "Konkani", "Maithili", "Malayalam", "Manipuri", "Marathi",
   "Nepali", "Odia", "Punjabi", "Sanskrit", "Santali", "Sindhi", "Tamil",
   "Telugu", "Urdu"
@@ -55,7 +55,7 @@ const SettingsDialog = ({ isOpen, onClose }: SettingsDialogProps) => {
                   <SelectValue placeholder="Select a language" />
                 </SelectTrigger>
                 <SelectContent>
-                  {indianLanguages.map(lang => (
+                  {languages.map(lang => (
                     <SelectItem key={lang} value={lang.toLowerCase()}>{lang}</SelectItem>
                   ))}
                 </SelectContent>
