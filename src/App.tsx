@@ -12,7 +12,6 @@ import SettingsPage from "./pages/SettingsPage";
 import FeedbackPage, { Feedback } from "./pages/FeedbackPage";
 import RecordsPage from "./pages/RecordsPage";
 import { showSuccess } from "./utils/toast";
-import CustomCursor from "./components/CustomCursor";
 
 const queryClient = new QueryClient();
 
@@ -60,7 +59,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <CustomCursor />
         <Toaster />
         <Sonner />
         <BrowserRouter>

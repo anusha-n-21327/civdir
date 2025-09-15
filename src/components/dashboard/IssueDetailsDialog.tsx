@@ -131,10 +131,10 @@ const IssueDetailsDialog = ({ issue, isOpen, onClose, onUpdate, onStartReject }:
         </div>
         <DialogFooter>
           {issue.status === 'New' ? (
-            <>
+            <div className="w-full grid grid-cols-2 gap-2">
               <Button variant="destructive" onClick={handleReject}>Reject</Button>
               <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={handleImplement}>Implement</Button>
-            </>
+            </div>
           ) : (
             <>
               <DialogClose asChild>
