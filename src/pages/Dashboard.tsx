@@ -1,6 +1,5 @@
 import Header from "@/components/dashboard/Header";
 import StatCard from "@/components/dashboard/StatCard";
-import Map from "@/components/dashboard/Map";
 import IssuesList from "@/components/dashboard/IssuesList";
 import { AlertCircle, CheckCircle, Clock, FilePlus, XCircle } from "lucide-react";
 
@@ -34,13 +33,8 @@ const Dashboard = () => {
           <StatCard title="Completed" value={stats.completed.toString()} icon={CheckCircle} />
           <StatCard title="Rejected" value={stats.rejected.toString()} icon={XCircle} />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[60vh]">
-          <div className="lg:col-span-2 h-full">
-            <Map issues={mockIssues} />
-          </div>
-          <div className="lg:col-span-1 h-full">
-            <IssuesList issues={mockIssues} />
-          </div>
+        <div className="grid grid-cols-1 gap-6">
+          <IssuesList issues={mockIssues} />
         </div>
       </main>
     </div>
