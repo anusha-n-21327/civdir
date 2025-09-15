@@ -46,7 +46,7 @@ const FeedbackPage = () => {
             key={i}
             className={cn(
               "h-4 w-4",
-              i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
+              i < rating ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground"
             )}
           />
         ))}

@@ -50,7 +50,7 @@ const Layout = ({ issues, setIssues, userProfile, onUpdateProfile, feedbackData 
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen w-full bg-background text-foreground">
       <Header newIssues={newIssues} onIssueClick={handleIssueClick} />
       <main className="p-4 md:p-8">
         <Outlet context={{ issues, setIssues, userProfile, onUpdateProfile, feedbackData, handleIssueClick }} />
