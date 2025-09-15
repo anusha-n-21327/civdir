@@ -13,9 +13,9 @@ interface IssuesListProps {
 }
 
 const statusStyles = {
-  'New': 'bg-[#FFD166] text-black',
-  'In Progress': 'bg-[#4FC3F7] text-black',
-  'Completed': 'bg-[#2EC4B6] text-black',
+  'New': 'bg-[#E84DF4] text-black animate-pulse-glow',
+  'In Progress': 'bg-[#3A86FF] text-white',
+  'Completed': 'bg-[#2EFF7B] text-black',
   'Rejected': 'bg-[#8D99AE] text-white',
 };
 

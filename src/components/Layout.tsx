@@ -50,9 +50,9 @@ const Layout = ({ issues, setIssues, userProfile, onUpdateProfile, feedbackData 
   };
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground">
+    <div className="min-h-screen w-full bg-transparent text-foreground">
       <Header newIssues={newIssues} onIssueClick={handleIssueClick} />
-      <main className="p-4 md:p-8">
+      <main className="p-4 md:p-8 animate-fade-in">
         <Outlet context={{ issues, setIssues, userProfile, onUpdateProfile, feedbackData, handleIssueClick }} />
       </main>
       <IssueDetailsDialog
