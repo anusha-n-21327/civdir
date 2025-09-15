@@ -38,7 +38,7 @@ const Dashboard = () => {
     <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <Header />
       <main className="p-4 md:p-8 space-y-6">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           <StatCard title="New Reports" value={stats.newReports.toString()} icon={FilePlus} />
           <StatCard title="Total Issues" value={stats.totalIssues.toString()} icon={AlertCircle} />
           <StatCard title="In Progress" value={stats.inProgress.toString()} icon={Clock} />
