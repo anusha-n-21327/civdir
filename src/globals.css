@@ -52,33 +52,33 @@
   }
 
   .dark {
-    --background: 0 0% 3%;
+    --background: 188 87% 6%;
     --foreground: 210 40% 98%;
-    --card: 0 0% 7%;
+    --card: 188 87% 9%;
     --card-foreground: 210 40% 98%;
-    --popover: 0 0% 3%;
+    --popover: 188 87% 6%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
+    --primary: 178 100% 33%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 0 0% 15%;
+    --secondary: 188 50% 20%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 0 0% 15%;
+    --muted: 188 50% 20%;
     --muted-foreground: 215 20% 65%;
-    --accent: 0 0% 15%;
+    --accent: 188 50% 25%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 72% 51%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 217 91% 60%;
-    --sidebar-background: 0 0% 3%;
+    --border: 188 50% 20%;
+    --input: 188 50% 20%;
+    --ring: 178 100% 33%;
+    --sidebar-background: 188 87% 6%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary: 178 100% 33%;
     --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent: 188 50% 25%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-border: 188 50% 20%;
+    --sidebar-ring: 178 100% 33%;
   }
 }
 
@@ -89,7 +89,7 @@
 
   body {
     @apply bg-background text-foreground;
-    background-image: linear-gradient(to bottom, #000000, #1A1A1A);
+    background-image: linear-gradient(to bottom, hsl(188 87% 6%), hsl(188 87% 9%));
     background-attachment: fixed;
   }
 }
