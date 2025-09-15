@@ -96,32 +96,42 @@ const ProfilePage = () => {
         
         <Separator />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          {isEditing ? (
-            <>
-              <div className="space-y-2"><Label htmlFor="email">Email</Label><Input id="email" type="email" value={formData.email} onChange={handleInputChange} /></div>
-              <div className="space-y-2"><Label htmlFor="age">Age</Label><Input id="age" type="number" value={formData.age} onChange={handleInputChange} /></div>
-              <div className="space-y-2"><Label htmlFor="department">Department</Label><Input id="department" value={formData.department} onChange={handleInputChange} /></div>
-              <div className="space-y-2">
-                <Label htmlFor="gender">Gender</Label>
-                <Select value={formData.gender} onValueChange={(v) => handleSelectChange('gender', v)}>
-                  <SelectTrigger id="gender"><SelectValue /></SelectTrigger>
-                  <SelectContent><SelectItem value="Male">Male</SelectItem><SelectItem value="Female">Female</SelectItem><SelectItem value="Other">Other</SelectItem></SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2"><Label htmlFor="state">State</Label><Input id="state" value={formData.state} onChange={handleInputChange} /></div>
-              <div className="space-y-2"><Label htmlFor="country">Country</Label><Input id="country" value={formData.country} onChange={handleInputChange} /></div>
-              <div className="sm:col-span-2 space-y-2"><Label htmlFor="avatarUrl">Avatar URL</Label><Input id="avatarUrl" value={formData.avatarUrl} onChange={handleInputChange} /></div>
-            </>
-          ) : (
-            <>
-              <div><p className="font-medium text-muted-foreground">Age</p><p>{formData.age}</p></div>
-              <div><p className="font-medium text-muted-foreground">Gender</p><p>{formData.gender}</p></div>
-              <div><p className="font-medium text-muted-foreground">State</p><p>{formData.state}</p></div>
-              <div><p className="font-medium text-muted-foreground">Country</p><p>{formData.country}</p></div>
-            </>
-          )}
-        </div>
+        {isEditing ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div className="space-y-2"><Label htmlFor="email">Email</Label><Input id="email" type="email" value={formData.email} onChange={handleInputChange} /></div>
+            <div className="space-y-2"><Label htmlFor="age">Age</Label><Input id="age" type="number" value={formData.age} onChange={handleInputChange} /></div>
+            <div className="space-y-2"><Label htmlFor="department">Department</Label><Input id="department" value={formData.department} onChange={handleInputChange} /></div>
+            <div className="space-y-2">
+              <Label htmlFor="gender">Gender</Label>
+              <Select value={formData.gender} onValueChange={(v) => handleSelectChange('gender', v)}>
+                <SelectTrigger id="gender"><SelectValue /></SelectTrigger>
+                <SelectContent><SelectItem value="Male">Male</SelectItem><SelectItem value="Female">Female</SelectItem><SelectItem value="Other">Other</SelectItem></SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2"><Label htmlFor="state">State</Label><Input id="state" value={formData.state} onChange={handleInputChange} /></div>
+            <div className="space-y-2"><Label htmlFor="country">Country</Label><Input id="country" value={formData.country} onChange={handleInputChange} /></div>
+            <div className="sm:col-span-2 space-y-2"><Label htmlFor="avatarUrl">Avatar URL</Label><Input id="avatarUrl" value={formData.avatarUrl} onChange={handleInputChange} /></div>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between rounded-lg border p-3">
+              <p className="text-sm font-medium text-muted-foreground">Age</p>
+              <p className="text-sm">{formData.age}</p>
+            </div>
+            <div className="flex items-center justify-between rounded-lg border p-3">
+              <p className="text-sm font-medium text-muted-foreground">Gender</p>
+              <p className="text-sm">{formData.gender}</p>
+            </div>
+            <div className="flex items-center justify-between rounded-lg border p-3">
+              <p className="text-sm font-medium text-muted-foreground">State</p>
+              <p className="text-sm">{formData.state}</p>
+            </div>
+            <div className="flex items-center justify-between rounded-lg border p-3">
+              <p className="text-sm font-medium text-muted-foreground">Country</p>
+              <p className="text-sm">{formData.country}</p>
+            </div>
+          </div>
+        )}
       </CardContent>
       <CardFooter>
         {isEditing ? (

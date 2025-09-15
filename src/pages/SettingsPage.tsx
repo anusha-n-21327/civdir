@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
 import { showSuccess } from "@/utils/toast";
 
 const languages = [
@@ -17,8 +18,18 @@ const languages = [
 ].sort();
 
 const SettingsPage = () => {
+  const [language, setLanguage] = useState("english");
+
   const handlePasswordSave = () => {
     showSuccess("Password updated successfully!");
+  };
+
+  const handleLanguageChange = (langValue: string) => {
+    setLanguage(langValue);
+    const selectedLanguage = languages.find(l => l.toLowerCase() === langValue);
+    if (selectedLanguage) {
+      showSuccess(`Language changed to ${selectedLanguage}`);
+    }
   };
 
   return (
@@ -40,17 +51,13 @@ const SettingsPage = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="language" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
-            <TabsTrigger value="language">Language</TabsTrigger>
-            <TabsTrigger value="notifications">Notifications</TabsTrigger>
-            <TabsTrigger value="password">Password</TabsTrigger>
-            <TabsTrigger value="help">Help</TabsTrigger>
-          </TabsList>
-          <TabsContent value="language" className="py-6">
-            <div className="space-y-2 max-w-sm">
+        <div className="space-y-8">
+          {/* Language Settings */}
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium">Language</h3>
+            <div className="space-y-2 max-w-sm pt-2">
               <Label htmlFor="language">Application Language</Label>
-              <Select>
+              <Select value={language} onValueChange={handleLanguageChange}>
                 <SelectTrigger id="language">
                   <SelectValue placeholder="Select a language" />
                 </SelectTrigger>
@@ -61,9 +68,14 @@ const SettingsPage = () => {
                 </SelectContent>
               </Select>
             </div>
-          </TabsContent>
-          <TabsContent value="notifications" className="py-6">
-            <div className="space-y-4 max-w-sm">
+          </div>
+
+          <Separator />
+
+          {/* Notification Settings */}
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium">Notifications</h3>
+            <div className="space-y-4 max-w-sm pt-2">
               <div className="flex flex-col items-start space-y-2 rounded-lg border p-4">
                 <Label htmlFor="allow-notifications">Allow notifications</Label>
                 <Switch id="allow-notifications" defaultChecked />
@@ -73,9 +85,14 @@ const SettingsPage = () => {
                 <Switch id="show-on-lockscreen" />
               </div>
             </div>
-          </TabsContent>
-          <TabsContent value="password" className="py-6">
-            <div className="space-y-4 max-w-sm">
+          </div>
+
+          <Separator />
+
+          {/* Password Settings */}
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium">Password</h3>
+            <div className="space-y-4 max-w-sm pt-2">
               <div className="space-y-2">
                 <Label htmlFor="current-password">Current Password</Label>
                 <Input id="current-password" type="password" />
@@ -90,20 +107,25 @@ const SettingsPage = () => {
               </div>
               <Button onClick={handlePasswordSave} className="w-full mt-4">Save Changes</Button>
             </div>
-          </TabsContent>
-          <TabsContent value="help" className="py-6">
-            <div className="prose prose-sm dark:prose-invert max-w-none">
+          </div>
+
+          <Separator />
+
+          {/* Help Section */}
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium">Help</h3>
+            <div className="prose prose-sm dark:prose-invert max-w-none pt-2">
               <h4 className="font-semibold">How to Use This Application</h4>
               <ol className="list-decimal list-inside space-y-2 mt-2 text-sm text-muted-foreground">
                 <li><strong>Dashboard Overview:</strong> The main dashboard provides a summary of all civic issues.</li>
-                <li><strong>Viewing Issues:</strong> Click on any issue in the list to view its details, including the description, location, and submitted image.</li>
-                <li><strong>Updating an Issue:</strong> In the details view, you can assign the issue to a department, update its status, and add official notes.</li>
-                <li><strong>Filtering:</strong> Use the dropdown menus at the top of the issues list to filter by status or category.</li>
-                <li><strong>Rejecting an Issue:</strong> To reject an issue, change its status to "Rejected". You will be prompted to provide a reason.</li>
+                <li><strong>Viewing Issues:</strong> Click on any issue in the list to view its details.</li>
+                <li><strong>Updating an Issue:</strong> In the details view, you can assign the issue, update its status, and add notes.</li>
+                <li><strong>Filtering:</strong> Use the dropdown menus to filter issues by status or category.</li>
+                <li><strong>Rejecting an Issue:</strong> To reject an issue, change its status to "Rejected" and provide a reason.</li>
               </ol>
             </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
