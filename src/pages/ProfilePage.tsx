@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -56,10 +57,20 @@ const ProfilePage = () => {
   return (
     <Card className="max-w-3xl mx-auto">
       <CardHeader>
-        <CardTitle>{isEditing ? "Edit Profile" : "User Profile"}</CardTitle>
-        <CardDescription>
-          {isEditing ? "Update your profile details below." : "View and manage your profile details."}
-        </CardDescription>
+        <div className="flex items-start justify-between">
+          <div>
+            <CardTitle>{isEditing ? "Edit Profile" : "User Profile"}</CardTitle>
+            <CardDescription>
+              {isEditing ? "Update your profile details below." : "View and manage your profile details."}
+            </CardDescription>
+          </div>
+          <Link to="/">
+            <Button variant="outline">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back
+            </Button>
+          </Link>
+        </div>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex items-center space-x-4">
@@ -104,10 +115,10 @@ const ProfilePage = () => {
             </>
           ) : (
             <>
-              <div className="flex justify-between"><span className="font-medium text-muted-foreground">Age</span><span>{formData.age}</span></div>
-              <div className="flex justify-between"><span className="font-medium text-muted-foreground">Gender</span><span>{formData.gender}</span></div>
-              <div className="flex justify-between"><span className="font-medium text-muted-foreground">State</span><span>{formData.state}</span></div>
-              <div className="flex justify-between"><span className="font-medium text-muted-foreground">Country</span><span>{formData.country}</span></div>
+              <div><p className="font-medium text-muted-foreground">Age</p><p>{formData.age}</p></div>
+              <div><p className="font-medium text-muted-foreground">Gender</p><p>{formData.gender}</p></div>
+              <div><p className="font-medium text-muted-foreground">State</p><p>{formData.state}</p></div>
+              <div><p className="font-medium text-muted-foreground">Country</p><p>{formData.country}</p></div>
             </>
           )}
         </div>

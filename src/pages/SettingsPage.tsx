@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -22,10 +24,20 @@ const SettingsPage = () => {
   return (
     <Card className="max-w-3xl mx-auto">
       <CardHeader>
-        <CardTitle>Settings</CardTitle>
-        <CardDescription>
-          Manage your application settings and preferences.
-        </CardDescription>
+        <div className="flex items-start justify-between">
+          <div>
+            <CardTitle>Settings</CardTitle>
+            <CardDescription>
+              Manage your application settings and preferences.
+            </CardDescription>
+          </div>
+          <Link to="/">
+            <Button variant="outline">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back
+            </Button>
+          </Link>
+        </div>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="language" className="w-full">
@@ -52,11 +64,11 @@ const SettingsPage = () => {
           </TabsContent>
           <TabsContent value="notifications" className="py-6">
             <div className="space-y-4 max-w-sm">
-              <div className="flex items-center justify-between rounded-lg border p-4">
+              <div className="flex flex-col items-start space-y-2 rounded-lg border p-4">
                 <Label htmlFor="allow-notifications">Allow notifications</Label>
                 <Switch id="allow-notifications" defaultChecked />
               </div>
-              <div className="flex items-center justify-between rounded-lg border p-4">
+              <div className="flex flex-col items-start space-y-2 rounded-lg border p-4">
                 <Label htmlFor="show-on-lockscreen">Show on lock screen</Label>
                 <Switch id="show-on-lockscreen" />
               </div>
