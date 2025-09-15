@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Bell, ChevronRight, HelpCircle, Languages, Lock } from "lucide-react";
+import { ArrowLeft, Bell, ChevronRight, Languages, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,7 +16,7 @@ const languageOptions = [
   "Telugu", "Urdu"
 ].sort();
 
-type SettingsSection = "main" | "language" | "notifications" | "password" | "help";
+type SettingsSection = "main" | "language" | "notifications" | "password";
 
 const SettingsPage = () => {
   const [activeSection, setActiveSection] = useState<SettingsSection>("main");
@@ -39,7 +39,6 @@ const SettingsPage = () => {
     language: "Language",
     notifications: "Notifications",
     password: "Password",
-    help: "Help",
   };
 
   const renderMainOptions = () => (
@@ -54,10 +53,6 @@ const SettingsPage = () => {
       </button>
       <button onClick={() => setActiveSection('password')} className="flex items-center justify-between w-full p-4 rounded-lg hover:bg-accent transition-colors">
         <div className="flex items-center"><Lock className="mr-3 h-5 w-5 text-muted-foreground" /><span>Password</span></div>
-        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-      </button>
-      <button onClick={() => setActiveSection('help')} className="flex items-center justify-between w-full p-4 rounded-lg hover:bg-accent transition-colors">
-        <div className="flex items-center"><HelpCircle className="mr-3 h-5 w-5 text-muted-foreground" /><span>Help</span></div>
         <ChevronRight className="h-5 w-5 text-muted-foreground" />
       </button>
     </div>
@@ -102,21 +97,6 @@ const SettingsPage = () => {
               <div className="space-y-2"><Label htmlFor="new-password">New Password</Label><Input id="new-password" type="password" /></div>
               <div className="space-y-2"><Label htmlFor="confirm-password">Confirm New Password</Label><Input id="confirm-password" type="password" /></div>
               <Button onClick={handlePasswordSave} className="w-full !mt-6">Save Changes</Button>
-            </CardContent>
-          </Card>
-        );
-      case 'help':
-        return (
-          <Card>
-            <CardContent className="pt-6 prose prose-sm dark:prose-invert max-w-none">
-              <h4 className="font-semibold">How to Use This Application</h4>
-              <ol className="list-decimal list-inside space-y-2 mt-2 text-sm text-muted-foreground">
-                <li><strong>Dashboard Overview:</strong> The main dashboard provides a summary of all civic issues.</li>
-                <li><strong>Viewing Issues:</strong> Click on any issue in the list to view its details.</li>
-                <li><strong>Updating an Issue:</strong> In the details view, you can assign the issue, update its status, and add notes.</li>
-                <li><strong>Filtering:</strong> Use the dropdown menus to filter issues by status or category.</li>
-                <li><strong>Rejecting an Issue:</strong> To reject an issue, change its status to "Rejected" and provide a reason.</li>
-              </ol>
             </CardContent>
           </Card>
         );
