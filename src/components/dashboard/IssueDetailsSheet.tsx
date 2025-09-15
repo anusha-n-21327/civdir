@@ -1,0 +1,127 @@
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetFooter,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Issue } from "@/pages/Dashboard";
+import { useEffect, useState } from "react";
+import { showSuccess } from "@/utils/toast";
+
+interface IssueDetailsSheetProps {
+  issue: Issue | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onUpdate: (updatedIssue: Issue, isRejecting: boolean) => void;
+}
+
+const departments = ["Public Works", "Sanitation", "Roads", "Water", "Parks", "Vandalism", "Unassigned"];
+const statuses: Issue['status'][] = ["New", "In Progress", "Completed", "Rejected"];
+
+const IssueDetailsSheet = ({ issue, isOpen, onClose, onUpdate }: IssueDetailsSheetProps) => {
+  const [assignedTo, setAssignedTo] = useState("");
+  const [status, setStatus] = useState<Issue['status']>('New');
+  const [notes, setNotes] = useState("");
+
+  useEffect(() => {
+    if (issue) {
+      setAssignedTo(issue.assignedTo || "Unassigned");
+      setStatus(issue.status);
+      setNotes(issue.notes || "");
+    }
+  }, [issue]);
+
+  if (!issue) return null;
+
+  const handleSaveChanges = () => {
+    const isRejecting = status === 'Rejected' && issue.status !== 'Rejected';
+    const updatedIssue: Issue = {
+      ...issue,
+      assignedTo,
+      status,
+      notes,
+    };
+    onUpdate(updatedIssue, isRejecting);
+    if (!isRejecting) {
+      showSuccess("Issue updated successfully.");
+      onClose();
+    }
+  };
+
+  return (
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
+        <SheetHeader>
+          <SheetTitle>{issue.title}</SheetTitle>
+          <SheetDescription>
+            Submitted by {issue.submittedBy} on {issue.date}
+          </SheetDescription>
+        </SheetHeader>
+        <div className="py-6 space-y-6">
+          <div>
+            <img src={issue.imageUrl} alt={issue.title} className="rounded-lg w-full object-cover" />
+          </div>
+          <div>
+            <h4 className="font-semibold mb-2">Description</h4>
+            <p className="text-sm text-muted-foreground">{issue.description}</p>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-2">Location</h4>
+            <p className="text-sm text-muted-foreground">{issue.location}</p>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="assignedTo">Assigned To</Label>
+            <Select value={assignedTo} onValueChange={setAssignedTo}>
+              <SelectTrigger id="assignedTo">
+                <SelectValue placeholder="Select a department" />
+              </SelectTrigger>
+              <SelectContent>
+                {departments.map(dept => (
+                  <SelectItem key={dept} value={dept}>{dept}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="status">Update Status</Label>
+            <Select value={status} onValueChange={(value) => setStatus(value as Issue['status'])}>
+              <SelectTrigger id="status">
+                <SelectValue placeholder="Select a status" />
+              </SelectTrigger>
+              <SelectContent>
+                {statuses.map(s => (
+                  <SelectItem key={s} value={s}>{s}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="notes">Official Notes</Label>
+            <Textarea
+              id="notes"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Add official notes here..."
+              rows={4}
+            />
+          </div>
+        </div>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </SheetClose>
+          <Button onClick={handleSaveChanges}>Save Changes</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export default IssueDetailsSheet;

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Issue } from "@/pages/Dashboard";
 import RejectIssueDialog from "./RejectIssueDialog";
+import IssueDetailsSheet from "./IssueDetailsSheet";
 import { showSuccess } from "@/utils/toast";
 
 interface IssuesListProps {
@@ -23,8 +23,11 @@ const statusColors = {
 const IssuesList = ({ issues, setIssues }: IssuesListProps) => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All");
+  
   const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
+  const [issueToUpdate, setIssueToUpdate] = useState<Issue | null>(null);
 
   const categories = ["All", ...Array.from(new Set(issues.map(issue => issue.category)))];
   const statuses = ["All", "New", "In Progress", "Completed", "Rejected"];
@@ -35,31 +38,34 @@ const IssuesList = ({ issues, setIssues }: IssuesListProps) => {
     return statusMatch && categoryMatch;
   });
 
-  const handleAcknowledge = (issueId: string) => {
-    setIssues(prevIssues =>
-      prevIssues.map(issue =>
-        issue.id === issueId ? { ...issue, status: 'In Progress' } : issue
-      )
-    );
-    showSuccess("Issue acknowledged.");
+  const handleIssueClick = (issue: Issue) => {
+    setSelectedIssue(issue);
+    setIsSheetOpen(true);
   };
 
-  const handleOpenRejectDialog = (issue: Issue) => {
-    setSelectedIssue(issue);
-    setIsRejectDialogOpen(true);
+  const handleUpdateIssue = (updatedIssue: Issue, isRejecting: boolean) => {
+    if (isRejecting) {
+      setIssueToUpdate(updatedIssue);
+      setIsSheetOpen(false);
+      setIsRejectDialogOpen(true);
+    } else {
+      setIssues(prev => prev.map(i => i.id === updatedIssue.id ? updatedIssue : i));
+    }
   };
 
   const handleRejectSubmit = (reason: string) => {
-    if (!selectedIssue) return;
+    if (!issueToUpdate) return;
 
-    setIssues(prevIssues =>
-      prevIssues.map(issue =>
-        issue.id === selectedIssue.id ? { ...issue, status: 'Rejected' } : issue
-      )
-    );
-    console.log(`Issue ${selectedIssue.id} rejected. Reason: ${reason}`);
+    const finalIssue = {
+      ...issueToUpdate,
+      notes: `${issueToUpdate.notes}\n\nRejection Reason: ${reason}`.trim(),
+    };
+
+    setIssues(prev => prev.map(i => i.id === finalIssue.id ? finalIssue : i));
+    
     showSuccess("Issue has been rejected.");
     setIsRejectDialogOpen(false);
+    setIssueToUpdate(null);
     setSelectedIssue(null);
   };
 
@@ -95,7 +101,11 @@ const IssuesList = ({ issues, setIssues }: IssuesListProps) => {
           <div className="space-y-4">
             {filteredIssues.length > 0 ? (
               filteredIssues.map(issue => (
-                <div key={issue.id} className="p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div 
+                  key={issue.id} 
+                  className="p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => handleIssueClick(issue)}
+                >
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-semibold">{issue.title}</h3>
@@ -106,16 +116,6 @@ const IssuesList = ({ issues, setIssues }: IssuesListProps) => {
                   <div className="text-xs text-muted-foreground mt-2">
                     <span>Submitted by {issue.submittedBy} on {issue.date}</span>
                   </div>
-                  {issue.status === 'New' && (
-                    <div className="flex items-center gap-2 mt-3">
-                      <Button size="sm" variant="outline" onClick={() => handleAcknowledge(issue.id)}>
-                        Acknowledge
-                      </Button>
-                      <Button size="sm" variant="destructive" onClick={() => handleOpenRejectDialog(issue)}>
-                        Reject
-                      </Button>
-                    </div>
-                  )}
                 </div>
               ))
             ) : (
@@ -124,6 +124,14 @@ const IssuesList = ({ issues, setIssues }: IssuesListProps) => {
           </div>
         </CardContent>
       </Card>
+      
+      <IssueDetailsSheet
+        isOpen={isSheetOpen}
+        onClose={() => setIsSheetOpen(false)}
+        issue={selectedIssue}
+        onUpdate={handleUpdateIssue}
+      />
+
       <RejectIssueDialog
         isOpen={isRejectDialogOpen}
         onClose={() => setIsRejectDialogOpen(false)}
