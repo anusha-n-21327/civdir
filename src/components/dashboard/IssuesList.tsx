@@ -13,10 +13,10 @@ interface IssuesListProps {
 }
 
 const statusColors = {
-  'New': 'bg-rose-600 hover:bg-rose-700',
-  'In Progress': 'bg-amber-500 hover:bg-amber-600',
-  'Completed': 'bg-emerald-500 hover:bg-emerald-600',
-  'Rejected': 'bg-slate-600 hover:bg-slate-700',
+  'New': 'bg-fuchsia-500 hover:bg-fuchsia-600 text-white',
+  'In Progress': 'bg-cyan-400 hover:bg-cyan-500 text-black',
+  'Completed': 'bg-lime-400 hover:bg-lime-500 text-black',
+  'Rejected': 'bg-slate-700 hover:bg-slate-800 text-white',
 };
 
 const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
@@ -79,7 +79,7 @@ const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
                     <h3 className="font-semibold">{issue.title}</h3>
                     <p className="text-sm text-muted-foreground">{issue.category}</p>
                   </div>
-                  <Badge className={cn("text-white", statusColors[issue.status])}>{issue.status}</Badge>
+                  <Badge className={cn(statusColors[issue.status])}>{issue.status}</Badge>
                 </div>
                 <div className="text-xs text-muted-foreground mt-2">
                   <span>Submitted by {issue.submittedBy} on {issue.date}</span>
