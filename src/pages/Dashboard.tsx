@@ -3,6 +3,7 @@ import Header from "@/components/dashboard/Header";
 import StatCard from "@/components/dashboard/StatCard";
 import IssuesList from "@/components/dashboard/IssuesList";
 import { AlertCircle, CheckCircle, Clock, FilePlus, XCircle } from "lucide-react";
+import LogoutButton from "@/components/dashboard/LogoutButton";
 
 export interface Issue {
   id: string;
@@ -42,7 +43,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <Header />
-      <main className="p-4 md:p-8 space-y-6">
+      <main className="p-4 md:p-8 space-y-6 pb-20">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           <StatCard title="New Reports" value={stats.newReports.toString()} icon={FilePlus} />
           <StatCard title="Total Issues" value={stats.totalIssues.toString()} icon={AlertCircle} />
@@ -54,6 +55,7 @@ const Dashboard = () => {
           <IssuesList issues={issues} setIssues={setIssues} />
         </div>
       </main>
+      <LogoutButton />
     </div>
   );
 };
