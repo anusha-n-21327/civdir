@@ -13,10 +13,10 @@ interface IssuesListProps {
 }
 
 const statusColors = {
-  'New': 'bg-red-500 hover:bg-red-600',
-  'In Progress': 'bg-yellow-500 hover:bg-yellow-600',
-  'Completed': 'bg-green-500 hover:bg-green-600',
-  'Rejected': 'bg-gray-500 hover:bg-gray-600',
+  'New': 'bg-rose-600 hover:bg-rose-700',
+  'In Progress': 'bg-amber-500 hover:bg-amber-600',
+  'Completed': 'bg-emerald-500 hover:bg-emerald-600',
+  'Rejected': 'bg-slate-600 hover:bg-slate-700',
 };
 
 const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
