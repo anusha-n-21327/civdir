@@ -71,7 +71,7 @@ const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
             filteredIssues.map(issue => (
               <div 
                 key={issue.id} 
-                className="p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                className="p-4 border rounded-lg shadow-sm hover:shadow-lg hover:translate-y-[-2px] transition-all duration-200 cursor-pointer"
                 onClick={() => onIssueClick(issue)}
               >
                 <div className="flex justify-between items-start">
