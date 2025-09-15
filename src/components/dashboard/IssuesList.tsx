@@ -79,7 +79,7 @@ const IssuesList = ({ issues, onIssueClick }: IssuesListProps) => {
               <div 
                 key={issue.id} 
                 className={cn(
-                  "p-4 border border-l-4 rounded-lg shadow-sm hover:shadow-lg hover:translate-y-[-2px] transition-all duration-200 cursor-pointer",
+                  "p-4 border border-l-4 rounded-lg shadow-sm hover:shadow-lg hover:bg-accent hover:translate-y-[-2px] transition-all duration-200 cursor-pointer",
                   statusBorderStyles[issue.status]
                 )}
                 onClick={() => onIssueClick(issue)}
