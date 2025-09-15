@@ -5,15 +5,19 @@ import SettingsDialog from "./SettingsDialog";
 import NotificationsPanel from "./NotificationsPanel";
 import FeedbackDialog, { Feedback } from "./FeedbackDialog";
 import { Issue } from "@/pages/Dashboard";
+import RecordsDialog from "./RecordsDialog";
 
 interface HeaderProps {
+  issues: Issue[];
   newIssues: Issue[];
   feedbackData: Feedback[];
+  onIssueClick: (issue: Issue) => void;
 }
 
-const Header = ({ newIssues, feedbackData }: HeaderProps) => {
+const Header = ({ issues, newIssues, feedbackData, onIssueClick }: HeaderProps) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isRecordsOpen, setIsRecordsOpen] = useState(false);
 
   return (
     <>
@@ -28,8 +32,8 @@ const Header = ({ newIssues, feedbackData }: HeaderProps) => {
             <Settings className="h-5 w-5" />
             <span className="sr-only">Settings</span>
           </Button>
-          <NotificationsPanel newIssues={newIssues} />
-          <Button variant="ghost" size="icon">
+          <NotificationsPanel newIssues={newIssues} onIssueClick={onIssueClick} />
+          <Button variant="ghost" size="icon" onClick={() => setIsRecordsOpen(true)}>
             <FileText className="h-5 w-5" />
             <span className="sr-only">Records</span>
           </Button>
@@ -37,6 +41,7 @@ const Header = ({ newIssues, feedbackData }: HeaderProps) => {
       </header>
       <SettingsDialog isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
       <FeedbackDialog isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} feedbackData={feedbackData} />
+      <RecordsDialog isOpen={isRecordsOpen} onClose={() => setIsRecordsOpen(false)} issues={issues} />
     </>
   );
 };

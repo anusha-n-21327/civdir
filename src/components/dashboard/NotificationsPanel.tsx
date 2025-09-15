@@ -5,9 +5,10 @@ import { Issue } from "@/pages/Dashboard";
 
 interface NotificationsPanelProps {
   newIssues: Issue[];
+  onIssueClick: (issue: Issue) => void;
 }
 
-const NotificationsPanel = ({ newIssues }: NotificationsPanelProps) => {
+const NotificationsPanel = ({ newIssues, onIssueClick }: NotificationsPanelProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -35,7 +36,8 @@ const NotificationsPanel = ({ newIssues }: NotificationsPanelProps) => {
               newIssues.map((issue) => (
                 <div
                   key={issue.id}
-                  className="grid grid-cols-[25px_1fr] items-start pb-4 last:pb-0"
+                  className="grid grid-cols-[25px_1fr] items-start pb-4 last:pb-0 cursor-pointer hover:bg-accent p-2 rounded-md"
+                  onClick={() => onIssueClick(issue)}
                 >
                   <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
                   <div className="grid gap-1">

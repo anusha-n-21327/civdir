@@ -5,6 +5,9 @@ import IssuesList from "@/components/dashboard/IssuesList";
 import { AlertCircle, CheckCircle, Clock, FilePlus, XCircle } from "lucide-react";
 import LogoutButton from "@/components/dashboard/LogoutButton";
 import { Feedback } from "@/components/dashboard/FeedbackDialog";
+import IssueDetailsDialog from "@/components/dashboard/IssueDetailsDialog";
+import RejectIssueDialog from "@/components/dashboard/RejectIssueDialog";
+import { showSuccess } from "@/utils/toast";
 
 export interface Issue {
   id: string;
@@ -39,6 +42,11 @@ const initialFeedback: Feedback[] = [
 const Dashboard = () => {
   const [issues, setIssues] = useState<Issue[]>(initialIssues);
   const [feedback] = useState<Feedback[]>(initialFeedback);
+  
+  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isRejectOpen, setIsRejectOpen] = useState(false);
+  const [issueToUpdate, setIssueToUpdate] = useState<Issue | null>(null);
 
   const newIssues = issues.filter(i => i.status === 'New');
 
@@ -50,9 +58,39 @@ const Dashboard = () => {
     rejected: issues.filter(i => i.status === 'Rejected').length,
   };
 
+  const handleIssueClick = (issue: Issue) => {
+    setSelectedIssue(issue);
+    setIsDetailsOpen(true);
+  };
+
+  const handleUpdateIssue = (updatedIssue: Issue, isRejecting: boolean) => {
+    if (isRejecting) {
+      setIssueToUpdate(updatedIssue);
+      setIsDetailsOpen(false);
+      setIsRejectOpen(true);
+    } else {
+      setIssues(prev => prev.map(i => i.id === updatedIssue.id ? updatedIssue : i));
+    }
+  };
+
+  const handleRejectSubmit = (reason: string) => {
+    if (!issueToUpdate) return;
+    const finalIssue = { ...issueToUpdate, notes: `${issueToUpdate.notes}\n\nRejection Reason: ${reason}`.trim() };
+    setIssues(prev => prev.map(i => i.id === finalIssue.id ? finalIssue : i));
+    showSuccess("Issue has been rejected.");
+    setIsRejectOpen(false);
+    setIssueToUpdate(null);
+    setSelectedIssue(null);
+  };
+
   return (
     <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <Header newIssues={newIssues} feedbackData={feedback} />
+      <Header 
+        issues={issues}
+        newIssues={newIssues} 
+        feedbackData={feedback}
+        onIssueClick={handleIssueClick}
+      />
       <main className="p-4 md:p-8 space-y-6 pb-20">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           <StatCard title="New Reports" value={stats.newReports.toString()} icon={FilePlus} />
@@ -62,10 +100,23 @@ const Dashboard = () => {
           <StatCard title="Rejected" value={stats.rejected.toString()} icon={XCircle} />
         </div>
         <div className="grid grid-cols-1 gap-6">
-          <IssuesList issues={issues} setIssues={setIssues} />
+          <IssuesList issues={issues} setIssues={setIssues} onIssueClick={handleIssueClick} />
         </div>
       </main>
       <LogoutButton />
+
+      <IssueDetailsDialog
+        isOpen={isDetailsOpen}
+        onClose={() => setIsDetailsOpen(false)}
+        issue={selectedIssue}
+        onUpdate={handleUpdateIssue}
+      />
+
+      <RejectIssueDialog
+        isOpen={isRejectOpen}
+        onClose={() => setIsRejectOpen(false)}
+        onSubmit={handleRejectSubmit}
+      />
     </div>
   );
 };

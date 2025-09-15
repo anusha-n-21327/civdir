@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -29,27 +28,21 @@ interface FeedbackDialogProps {
 
 const FeedbackDialog = ({ isOpen, onClose, feedbackData }: FeedbackDialogProps) => {
   const [dateFilter, setDateFilter] = useState("all");
-  const [areaFilter, setAreaFilter] = useState("all");
-
-  const areas = ["all", ...Array.from(new Set(feedbackData.map(f => f.area)))];
 
   const filteredAndSortedFeedback = useMemo(() => {
     return feedbackData
       .filter(feedback => {
         const date = parseISO(feedback.date);
-        const dateMatch =
+        return (
           dateFilter === "all" ||
           (dateFilter === "today" && isToday(date)) ||
           (dateFilter === "week" && isThisWeek(date, { weekStartsOn: 1 })) ||
           (dateFilter === "month" && isThisMonth(date)) ||
-          (dateFilter === "year" && isThisYear(date));
-        
-        const areaMatch = areaFilter === "all" || feedback.area === areaFilter;
-
-        return dateMatch && areaMatch;
+          (dateFilter === "year" && isThisYear(date))
+        );
       })
       .sort((a, b) => b.rating - a.rating);
-  }, [feedbackData, dateFilter, areaFilter]);
+  }, [feedbackData, dateFilter]);
 
   const renderStars = (rating: number) => {
     return (
@@ -89,16 +82,6 @@ const FeedbackDialog = ({ isOpen, onClose, feedbackData }: FeedbackDialogProps) 
               <SelectItem value="year">This Year</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={areaFilter} onValueChange={setAreaFilter}>
-            <SelectTrigger>
-              <SelectValue placeholder="Filter by area" />
-            </SelectTrigger>
-            <SelectContent>
-              {areas.map(area => (
-                <SelectItem key={area} value={area}>{area === 'all' ? 'All Areas' : area}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
         </div>
         <div className="flex-grow overflow-y-auto pr-2">
           <div className="space-y-4">
@@ -108,7 +91,7 @@ const FeedbackDialog = ({ isOpen, onClose, feedbackData }: FeedbackDialogProps) 
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="font-semibold">{feedback.name}</div>
-                      <div className="text-xs text-muted-foreground">{feedback.area} - {new Date(feedback.date).toLocaleDateString()}</div>
+                      <div className="text-xs text-muted-foreground">{new Date(feedback.date).toLocaleDateString()}</div>
                     </div>
                     {renderStars(feedback.rating)}
                   </div>
